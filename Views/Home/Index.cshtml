@@ -1,0 +1,123 @@
+﻿@using bfw_WebAppBaumarkt_2024_04_08.Models;
+@model IndexViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html lang="de">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+    .table-container {
+        margin-top: 20px;
+        width: 80vw;
+        display: flex;
+        justify-content: center;
+    }
+    .tbl {
+        width: 100%;
+        align-self: center;
+    }
+    .tbl th {
+        background-color: #f2f2f2;
+    }
+    .tbl th, .tbl td {
+        padding: 10px;
+        text-align: center;
+    }
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+    }
+    .search-fields {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    </style>
+    <title>Home</title>
+</head>
+<body>
+<div class="view-Container">
+    <div class="header">
+        <h1>Article List</h1>
+        <div class="search-fields">
+            <form action="/Home/Index" method="post">
+                <label for="search">Search:</label>
+                <input type="text" id="search" name="search" placeholder="Search for Article.." 
+                       @if (Model.Search != "")
+                       {
+                           <text>value="@Model.Search"</text>
+                       }>
+
+                 <label for="param">Kategorie:</label>
+                <select id="param" name="param" onchange="this.form.submit()">
+                    <option value="0"
+                            @if (Model.CategoryId == 0)
+                            {
+                                <text>selected</text>
+                            }>
+                        All
+                    </option>
+                    @foreach (var kat in Model.Categories)
+                    {
+                        <option value="@kat.KId"
+                                @if (Model.CategoryId == kat.KId)
+                                {
+                                    <text>selected</text>
+                                }>
+                            @kat.Bezeichnung
+                        </option>
+                    }
+                </select>
+
+
+                <button type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+    <div class="table-container">
+        <table class="tbl">
+            <thead>
+            <tr>
+                <th>Article-ID</th>
+                <th>Article Img</th>
+                <th>Bezeichnung</th>
+                <th>Kategorie (KID)</th>
+                <th>Preis</th>
+                <th>Bestand</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var article in Model.Articles)
+            {
+                <tr>
+                    <td>@article.AId</td>
+                    <td>
+                        @if (article.Bild != null)
+                        {
+                            <img src="@(article.Bild)" alt="Bild" style="width: 50px; height: 50px;"/>
+                        }
+                        else
+                        {
+                            <text>no image</text>
+                        }
+                    </td>
+                    <td>@article.Name</td>
+                    <td>@article.Category.Bezeichnung (@article.KId)</td>
+                    <td>@article.LPreis €</td>
+                    <td>@(article.Bestand > 0 ? article.Bestand : "nicht auf Lager")</td>
+                </tr>
+            }
+
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
