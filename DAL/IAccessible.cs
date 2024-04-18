@@ -9,7 +9,7 @@ public interface IAccessible
     public List<Article> GetArticlesByCategory(int categoryId);
     public IndexViewModel GetArticlesAndCategories();
     public int InsertArticle(Article article);
-    public bool UpdateArticle(Article article);
+    public bool UpdateArticle(UpdateModel updateModel);
     public bool DeleteArticleById(int id);
     
     public List<Category> GetAllCategories();

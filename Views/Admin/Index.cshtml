@@ -10,12 +10,16 @@
 <html lang="de">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <style>
     .table-container {
         margin-top: 20px;
         width: 80vw;
         display: flex;
         justify-content: center;
+    }
+    .headmid{
+        align-self: flex-end;
     }
     .tbl {
         width: 100%;
@@ -29,7 +33,7 @@
         text-align: center;
     }
     tr.border:hover {
-        box-shadow: 0 0 1px 0 rgb(0, 0, 0);
+       box-shadow: 0 0 1px 0 rgb(0, 0, 0);
     }
     .header {
         display: flex;
@@ -42,7 +46,7 @@
         justify-content: space-between;
         align-items: center;
     }
-    .btnadmin{
+    .btn-big{
         background-color: #f2f2f2;
         border: none;
         color: black;
@@ -54,30 +58,7 @@
         margin: 4px 2px;
         cursor: pointer;
     }
-
-    .tbl-image:hover{
-        cursor: zoom-in;
-    }
-    #tbl-image{
-        max-width: 80%; 
-        max-height: 80%; 
-        }
-    #tbl-image-container:hover{
-        cursor: zoom-out;
-    }
-    .tbl-image-container{
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background-color: rgba(0, 0, 0, 0.8);
-        justify-content: center;
-        align-items: center;
-        align-content: center; 
-        display: none;
-        z-index: 1;
-    }
+    
     </style>
     <title>Home</title>
 </head>
@@ -86,10 +67,14 @@
     <div class="header">
         <div class="headleft">
             <h1>Article List</h1>
-            <button class="btnadmin" onclick="window.location.href = '/Admin/Index'">Admin</button>
+            <button class="btn-big" onclick="window.location.href = '/Home/Index'">Zurück</button>
+        </div>
+        <div class="headmid">
+            <button class="btn-big" onclick="window.location.href = '/Admin/InsertArticle'">➕ New Article</button>
+            <button class="btn-big" onclick="window.location.href = '/Admin/InsertCategory'">➕ New Category</button>
         </div>
         <div class="search-fields">
-            <form action="/Home/Index" method="post">
+            <form action="/Admin/Index" method="post">
                 <label for="search">Search:</label>
                 <input type="text" id="search" name="search" placeholder="Search for Article.."
                        @if (Model.Search != "")
@@ -118,11 +103,11 @@
                     }
                 </select>
 
-
                 <button type="submit">Search</button>
             </form>
         </div>
     </div>
+    
     <div class="table-container">
         <table class="tbl">
             <thead>
@@ -133,6 +118,7 @@
                 <th>Kategorie (KID)</th>
                 <th>Preis</th>
                 <th>Bestand</th>
+                <th>Administration</th>
             </tr>
             </thead>
             <tbody>
@@ -140,27 +126,29 @@
             {
                 <tr class="border">
                     <td>@article.AId</td>
-                    <td class="tbl-image">
+                    <td>
                         @if (article.Bild != null)
                         {
-                            <img src="/images/@(article.Bild)" alt="Bild" style="width: 50px; height: 50px;" onclick="document.getElementById('tbl-image').src = this.src; document.getElementById('tbl-image-container').style.display = 'flex';"/>
+                            <img src="/images/@(article.Bild)" alt="Bild" style="width: 50px; height: 50px;"/>
                         }
                         else
                         {
-                            <img src="/images/No-Image-Placeholder.jpg" alt="NoImage" style="width: 50px; height: 50px;"/>
+                            <text>no image</text>
                         }
                     </td>
                     <td>@article.Name</td>
                     <td>@article.Category.Bezeichnung (@article.KId)</td>
                     <td>@article.LPreis €</td>
                     <td>@(article.Bestand > 0 ? article.Bestand : "nicht auf Lager")</td>
+                    <td>
+                    <a href="/admin/edit?aid=@article.AId">Edit 🖊️</a> <br/>
+                    <a href="/admin/delete/aid?@article.AId">Delete ❌</a>
+                    </td>
                 </tr>
             }
+
             </tbody>
         </table>
-        <div class="tbl-image-container" id="tbl-image-container" onclick="this.style.display = 'none'">
-            <img src="" alt="Bild" id="tbl-image"/>
-        </div>
     </div>
 </div>
 </body>

@@ -21,30 +21,6 @@ public class HomeController : Controller
     {
         IndexViewModel model = _dal.GetArticlesAndCategories();
 
-        // Liste aus Liste ????
-
-        /*
-        _dal.GetAllArticles().ForEach(a =>
-        {
-            model.Articles.Add(a);
-            if (!model.Categories.Contains(a.Category))
-            {
-                model.Categories.Add(a.Category);
-            }
-
-        });
-        */
-        /*
-        foreach (Article article in _dal.GetAllArticles())
-        {
-            model.Articles.Add(article);
-            if (!model.Categories.Contains(article.Category))
-            {
-                model.Categories.Add(article.Category);
-            }
-        }
-        */
-
         return View(model);
     }
 
@@ -56,12 +32,12 @@ public class HomeController : Controller
         List<Article> articles = new List<Article>();
         model.Articles.ForEach(a =>
         {
-            if (a.Name.ToLower().Contains((search ?? "").ToLower() ))
+            if (a.Name.ToLower().Contains((search ?? "").ToLower()))
             {
                 articles.Add(a);
             }
         });
-        
+
         model.Articles.Clear();
         articles.ForEach(a =>
         {
@@ -71,20 +47,9 @@ public class HomeController : Controller
             }
         });
 
-       model.Search = search;
-       model.CategoryId = param;
-        /*
-        IndexViewModel model = new IndexViewModel();
-        _dal.GetArticlesByCategory(param ?? 0).ForEach(a =>
-        {
-            model.Articles.Add(a);
-            if (!model.Categories.Contains(a.Category))
-            {
-                model.Categories.Add(a.Category);
-            }
-        });
-        */
-        
+        model.Search = search;
+        model.CategoryId = param;
+
         return View(model);
     }
 }

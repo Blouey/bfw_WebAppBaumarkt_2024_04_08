@@ -1,0 +1,109 @@
+﻿@using bfw_WebAppBaumarkt_2024_04_08.Models;
+@model UpdateModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html lang="de">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+    .edit-form {
+        margin-top: 20px;
+        width: 80vw;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        transform: scale(1.2);
+    }
+    span {
+        display: flex;
+        align-self: center;
+        align-items: center;
+        justify-content: space-between;
+        width: 30%;
+        margin: 0.5em;
+    }
+    .tbl th {
+        background-color: #f2f2f2;
+    }
+    .tbl th, .tbl td {
+        padding: 10px;
+        text-align: center;
+    }
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+    }
+
+     .btnback{
+            background-color: #f2f2f2;
+            border: none;
+            color: black;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+    </style>
+    <title>Home</title>
+</head>
+<body>
+<div class="view-Container">
+    <div class="header">
+        <div class="headleft">
+            <h1>Article List</h1>
+            <button class="btnback" onclick="window.location.href = '/Admin/Index'">Zurück</button>
+        </div>
+    </div>
+    <div class="edit-form">
+        <form action="/Admin/Edit" method="post" enctype="multipart/form-data" class="edit-form">
+            <span>
+                <label for="aid">AId</label>
+                <input type="text" id="aid" name="AId" value="@Model.AId" readonly="readonly">
+            </span>
+            <span>
+                <label for="category">Kategorie</label>
+                <input type="text" id="category" name="Category.Bezeichnung" value="@Model.Category.Bezeichnung" readonly="readonly">
+            </span>
+            <span>
+                <label for="name">Artikelname</label>
+                <input type="text" id="name" name="name" value="@Model.Name">
+            </span>
+            <span>
+                <label for="price">Preis</label>
+                <input type="text" id="price" name="LPreis" value="@Model.LPreis">
+            </span>
+            <span>
+                <label for="stock">Lagerbestand</label>
+                <input type="number" id="stock" name="Bestand" value="@Model.Bestand">
+            </span>
+            <span>
+                <label for="picture">Bilddatei</label>
+                <input type="file" id="picture" name="File" value="@Model.File">
+                <input type="text" name="currPicture" value="@Model.Bild" hidden="hidden" readonly="readonly"/>
+            </span>
+            <span hidden="hidden">
+                <label for="kid" hidden="hidden">KId</label>
+                <input type="text" id="kid" name="KId" value="@Model.Category.KId" hidden="hidden">
+            </span>
+            
+            <span>
+                <input type="submit" value="Speichern">
+            </span>
+
+        </form>
+
+    </div>
+</div>
+
+</body>
+</html>
